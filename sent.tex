@@ -1,3 +1,8 @@
+% In reproduce experiment part, we accidentally chose radial kernel svm instead of linear. Fixed % and results now are more reasonable.
+% We have cut some of the introduction for adding more concrete examples on the classifiers part
+% Also added the fitted decision boundary plot for those specific examples
+% The Q&A teasers we've put in some slides also serve as kind of demonstrations, that validate % the students understanding. what do you think?
+
 \documentclass{beamer}
 \usetheme{Boadilla}
 \usepackage{default}
@@ -75,6 +80,7 @@
 	\end{itemize}
 \end{frame}
 
+\iffalse
 \begin{frame}
 	\frametitle{Topic classification}
 	\framesubtitle{Current (2002) techniques for non-topic text categorization}
@@ -91,6 +97,7 @@
 		\item Does text contains opinion expressing?
 	\end{itemize}
 \end{frame}
+\fi
 
 \subsection{Sentiment analysis}
 
@@ -100,11 +107,12 @@
 	\item This work: apply topic classification techniques on sentiment analysis
 	\begin{itemize}
 		\item Q: What are our expected challenges?
-		\pause
+		\pause %1
 		\item A: Topics are identifiable by key words alone, while sentiment requires more \textbf{understanding}
 	\end{itemize}
 	\end{itemize}
-	\pause
+	
+	\pause %2
 	\begin{itemize}
 		\item e.g., "How could anyone sit through this movie?"
 		\begin{itemize}
@@ -112,18 +120,39 @@
 		\end{itemize}
 	
 	\end{itemize}
-	\pause
 	
-	% works
-	\begin{itemize}
-	\item Previous (2002) techniques:
-	\begin{itemize}
-		\item Cognitive linguistic models (Sack, 1994)
-		\item Discriminant word lexicons (Tong, 2001)
-		\item Semantic orientation of words (Turney and Littman, 2002)
-	\end{itemize}
-	\end{itemize}
+	%\pause
 	
+	% other works
+	%\begin{itemize}
+	%\item Previous (2002) techniques:
+	%\begin{itemize}
+	%	\item Cognitive linguistic models (Sack, 1994)
+	%	\item Discriminant word lexicons (Tong, 2001)
+	%	\item Semantic orientation of words (Turney and Littman, 2002)
+	%\end{itemize}
+	%\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sentiment analysis}
+	\framesubtitle{Motivation}
+	\begin{center}
+	\begin{tabular}{c}
+		\includegraphics[scale=0.5]{imdb_star} \\
+	\end{tabular}
+	\end{center}
+	\begin{itemize}
+		\item Should we watch this movie? \pause
+		\item Ideally: read each review and decide
+	\end{itemize}
+	\begin{center}
+	\begin{tabular}{l}
+		\includegraphics[scale=0.5]{imdb_review_pos_exag} \pause \\ \hline \hline
+		\includegraphics[scale=0.5]{imdb_review_neg}
+	\end{tabular}
+	\end{center}
 
 \end{frame}
 
@@ -133,11 +162,11 @@
 \begin{frame}
 	\frametitle{Problem definition}
 	\begin{itemize}
-		\item Find a mapping from text document to binary label \pause
+		\item Find mapping from text to binary label \pause
 		\begin{itemize}
 			\item Supervised learning
 		\end{itemize} \pause
-		\item For $m$ numeric features we define the mapping as:
+		\item For $m$ numeric features we define:
 	\end{itemize}
 	\pause
 	\begin{definition}[Binary classifier]
@@ -147,8 +176,8 @@
 	\end{definition}
 	\pause
 	\begin{itemize}
-		\item Evaluating the mapping is done by loss function \pause
-		\item e.g., Zero-one loss: $L(x,y,f_w)=\textbf{1}\{ \hat{f_w(x)} \neq y \}$
+		\item Evaluate by loss function \pause
+		\item e.g., Zero-one loss: $L(x,y,f_w)=\textbf{1}\{ f_w(x) \neq y \}$
 		\begin{itemize}
 			\item $w$ denotes learned parameters
 		\end{itemize}
@@ -160,10 +189,10 @@
 \begin{frame}
 	\frametitle{Data: IMDB Movie Reviews}
 	\begin{itemize}
-		\item Lucky for us: user rating provides us \textbf{supervised} learning
-		\item Converted into three categories (or topics):
+		\item Lucky for us: user rating provides \textbf{supervised} learning
+		\item Converted into 3 categories:
 		\begin{itemize}
-			\item \emph{Positive}, \emph{negative}, (and \emph{neutral} - not used)
+			\item \emph{Positive}, \emph{negative}, (\emph{neutral} - not used)
 		\end{itemize}
 		\item Avoid bias issues:
 		\begin{itemize}
@@ -185,14 +214,15 @@
 		\begin{itemize}
 		
 		\onslide<2->
-		\item Topics can be related, while with opinions people tend to express strong feelings
+		\item People tend to express strong feelings, topics can be related.
+		%\item Topics can be related, while with opinions people tend to express strong feelings
 		\end{itemize}
 		
 		\onslide<3->
-		\item Hypothesis: certain words indicate on sentiment type
+		\item \textbf{Hypothesis:} certain words indicate on sentiment type
 		
 		\onslide<4->
-		\item Test: decision procedure - count positive vs. negative words
+		\item \textbf{Test:} count positive vs. negative words
 	\end{itemize}
 	
 	\onslide<5->
@@ -213,15 +243,15 @@
 	\frametitle{Human based sentiment classifiers}
 	\framesubtitle{Should we worry about high rate of ties?}
 	\begin{itemize}
-		\item Proposed words list is relatively short (effect is 0 vs. 0 ties)
+		\item Proposed list is relatively short (usually effect is 0 vs. 0)
 		\pause
 		\begin{itemize}
 			\item Not necessarily the reason for low accuracy!
 		\end{itemize}
 		\pause
-		\item Authors propose their own list of words
+		\item Authors propose their list
 		\begin{itemize}
-			\item Backed up with preliminary \textbf{data analysis} (including test set)
+			\item Backed up with statistics
 		\end{itemize}
 	\end{itemize}
 	
@@ -236,12 +266,17 @@
 		\caption{Results where words (total 14) were chosen based on data statistics}
 	\end{table}
 	
-	\pause
-	\underline{	 (2018) Reproduce data analysis, feature occurrences binarized:}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Human based sentiment classifiers}
+	\framesubtitle{(2018) Data analysis}
+	We reproduced the analysis, following are example estimates
+	\begin{center}
+		\includegraphics[scale=0.5]{likelihoods}
+	\end{center}
 	\begin{itemize}
-		\small
-		\item $\widehat{P(love|d=positive)} = 0.1796$ , $\widehat{P(love|d=negative)} = 0.1334$ \pause
-		\item $\widehat{P(worst|d=positive)} = 0.0252$ , $\widehat{P(worst|d=negative)} = 0.0937$
+		\item Note words occurrences were binarized
 	\end{itemize}
 \end{frame}
 
@@ -250,44 +285,69 @@
 
 \begin{frame}
 \frametitle{Bag of words}
+\framesubtitle{Framework details}
 
-\begin{itemize}
+\begin{theorem}[1]
+	Let $\{f_1,..f_m\}$ denote set of m features that can appear in document.
+\end{theorem}
+\pause
+
+\begin{itemize}	
 	% introduce unigrams, bigrams
 	% relative frequency, tf-idf
-	\item $d_1$: "The audio quality really stinks."
+	\item $d$: "Audio quality rocks"
 	\pause
-	\item Extract features:
+	\item Features:
 	\begin{itemize}
-		\item Unigrams: \{the,audio,..  \}
-		\item Bigrams: \{the audio, audio quality, really stinks,.. \}
-		\item N-gram!	
+		\item Unigram: \{'audio', 'rocks',..  \}
+		\item Bigram: \{'audio quality',.. \}
+		\item N-gram !
 	\end{itemize}
 \end{itemize}
 
 \pause
-\begin{Definition}[Bag of words framework]
-	Let $\{f_1,..f_m\}$ denote set of m features that can appear in document. \\
-	Let $n_i(d)$ be the number of times $f_i$ occurs in document $d$. \\ 
-	Then each document $d$ is represented by $\overrightarrow{d}:=(n_1(d),...,n_m(d))$.
-\end{Definition}
+\begin{theorem}[2]
+	Let $n_i(d)$ be the number of times $f_i$ occurs in document $d$.
+\end{theorem}
 
 \pause
-\underline{Unigram example}
-\begin{itemize}
-	\item $\overrightarrow{d_1} = (The: 1, audio: 1, quality: 1, really:1, stinks:1)$
-	\pause
-	\item $d_2$: "Stinking quality, really stinks". \emph{Question:} $\overrightarrow{d_2} = ?$
-	\pause
-	\item $\overrightarrow{d_2} = (0, 0, 1, 1,2)$
-\end{itemize}
+\begin{Definition}[BOW]
+	Then each document $d$ is represented by $d^{bow}:=(n_1(d),...,n_m(d))$.
+\end{Definition}
 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bag of words}
+	\framesubtitle{Example}
+	\begin{itemize}
+		\item $d_1$: "Audio rocks"
+		\item $d_2$: "Act boring"
+	\end{itemize}
+	\pause
+	\begin{center}
+	\begin{table}
+		\begin{tabular}{c|c|c|c|c}
+			& act & audio & boring & rocks \\ \hline \hline
+			mapping & 0 & 1 & 2 & 3 \\ \hline
+			d1 & 0 & 1 & 0 & 1 \\
+			d2 & 1 & 0 & 1 & 0
+		\end{tabular}
+	\end{table}
+	\end{center}
+	
+	\pause
+	\begin{itemize}
+		\item $d_3$: "Boring effects", $d_3^{bow}=$? \pause
+		\item $d_3^{bow}$=(0,0,1,0)
+	\end{itemize}
 \end{frame}
 
 \subsection{Naive bayes}
 \begin{frame}
 	\frametitle{Naive Bayes classifier}
 	\begin{itemize}
-		\item Assign class which maximizes probability: $c^{*}=argmax_{c} P(c|d)$
+		\item Assign class which maximizes: $c^{*}=argmax_{c} P(c|d)$
 		\pause
 		\item Recap:
 	\end{itemize}
@@ -298,17 +358,39 @@
 	\end{Definition}
 	\pause
 	\begin{itemize}
-		\item In practice to estimate $P(d|c)$, we \textbf{naively} assume $f_i$ are conditionally independent.
+		\item To estimate $P(d|c)$ we \textbf{naively} assume $f_i$'s are independent.
 		\pause
 		\begin{itemize}
 			\item Hence $\widehat{P(d|c)}=\prod_{i=1}^{m}P(f_i|c)^{n_i(d)}$ 
 		\end{itemize}
 		\pause
-		\item Q: Any numeric issues you can think about?
+		\item Q: Any numeric issues you notice?
 		\pause
-		\item $A_1$: Some estimates are zero, can smooth (e.g., add-one smoothing) 
+		\item $A_1$: Estimates could be zero
 		\pause
-		\item $A_2$: Short documents vs. long documents (propose: tf-idf)
+		\item $A_2$: Short vs. long documents
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Naive bayes example}
+	Assume the following Bow model with 4 documents for each class:
+	\begin{center}
+		\begin{table}
+			\begin{tabular}{c|c|c|c|c}
+				& act & audio & boring & rocks \\ \hline \hline
+				mapping & 0 & 1 & 2 & 3 \\ \hline
+				positive & 1 & 3 & 1 & 3 \\
+				negative & 3 & 1 & 3 & 1
+			\end{tabular}
+		\end{table}
+	\end{center}
+	\pause
+	\begin{itemize}
+		\item $d_3$ = "Boring effects" , $d_3^{bow}=(0,0,1,0)$ \pause
+		\item Recall $\widehat{P(d|c)}=\prod_{i=1}^{m}P(f_i|c)^{n_i(d)}$ \pause
+		\item $P(d|pos)=\frac{1}{4}^0*\frac{1}{4}^0*\frac{1}{4}^1*\frac{1}{4}^0=\frac{1}{4}$ \pause
+		\item $P(d|neg)=\frac{1}{4}^0*\frac{1}{4}^0*\frac{3}{4}^1*\frac{1}{4}^0=\frac{3}{4}$
 	\end{itemize}
 \end{frame}
 
