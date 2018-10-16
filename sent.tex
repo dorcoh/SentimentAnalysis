@@ -39,24 +39,22 @@
 \author{Slides by: Dor Cohen, Itai Gat}
 \institute{IE @ Technion}
 \date{\today}
-% add github page
+
 \newtheorem{snt}{Review example}
 \begin{document}
 
+% start
 \begin{frame}
 	\titlepage
-	Code:
-	\centering{http://github.com/dorcoh/sent-emnlp}
 \end{frame}
 
-
-
-
+% agenda
 \begin{frame}
 	\frametitle{Agenda}
 	\tableofcontents
 \end{frame}
 
+% intro
 \section{Introduction}
 \subsection{Topic classification}
 
@@ -66,10 +64,9 @@
 	\item Recent (2002) works sort documents according to their \textbf{subject}
 	\begin{itemize}
 		\item e.g., sports vs. politics
-		\item spam vs. no-spam
 	\end{itemize}
 	\pause
-	\item Yet crucial part of online posted articles is their \textbf{sentiment} (or overall opinion)
+	\item Yet crucial part of online posted articles is their \textbf{sentiment}
 	\begin{itemize}
 		\item provide useful insights for readers automatically
 		\item e.g., product review is negative or positive
@@ -86,11 +83,11 @@
 		\begin{itemize}
 			\item e.g., author, publisher (NY times vs. Daily News)
 		\end{itemize}
-		\item Genre of text
+		\item Genre of text (Finn et al., 2002)
 		\begin{itemize}
 			\item e.g., editorial 'subjective' genre
 		\end{itemize}
-		\item Is subjective language used?
+		\item Is subjective language used? (Wiebe et al., 2001)
 		\item Does text contains opinion expressing?
 	\end{itemize}
 \end{frame}
@@ -117,25 +114,51 @@
 	\end{itemize}
 	\pause
 	
+	% works
 	\begin{itemize}
 	\item Previous (2002) techniques:
 	\begin{itemize}
-		\item Semantic orientation of words (Turney and Littman, 2002)
 		\item Cognitive linguistic models (Sack, 1994)
 		\item Discriminant word lexicons (Tong, 2001)
-	
+		\item Semantic orientation of words (Turney and Littman, 2002)
 	\end{itemize}
 	\end{itemize}
 	
 
 \end{frame}
 
-\section{Problem definition}
+% problem
+\section{Problem}
+\subsection{Problem definition}
+\begin{frame}
+	\frametitle{Problem definition}
+	\begin{itemize}
+		\item Find a mapping from text document to binary label \pause
+		\begin{itemize}
+			\item Supervised learning
+		\end{itemize} \pause
+		\item For $m$ numeric features we define the mapping as:
+	\end{itemize}
+	\pause
+	\begin{definition}[Binary classifier]
+		\center
+		$f: X \to y$ \\
+		where $X \in \mathbb{R}^{m}$, $y \in \{0,1\}$
+	\end{definition}
+	\pause
+	\begin{itemize}
+		\item Evaluating the mapping is done by loss function \pause
+		\item e.g., Zero-one loss: $L(x,y,f_w)=\textbf{1}\{ \hat{f_w(x)} \neq y \}$
+		\begin{itemize}
+			\item $w$ denotes learned parameters
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
 \subsection{Data}
 
 \begin{frame}
-	\frametitle{Problem definition}
-	\framesubtitle{Data: IMDB Movie Reviews}
+	\frametitle{Data: IMDB Movie Reviews}
 	\begin{itemize}
 		\item Lucky for us: user rating provides us \textbf{supervised} learning
 		\item Converted into three categories (or topics):
@@ -148,13 +171,12 @@
 			\item 752 negative vs 1301 positive
 			\item total of 144 reviewers
 		\end{itemize}
-		\item More preprocess steps: TODO!
 	\end{itemize}
 \end{frame}
 
 % human based
 
-\subsection{Closer look}
+\subsection{Human baseline}
 \begin{frame}
 	\frametitle{Human based sentiment classifiers}
 	\begin{itemize}
@@ -215,7 +237,7 @@
 	\end{table}
 	
 	\pause
-	Reproduce data analysis (2018), feature occurrences binarized:
+	\underline{	 (2018) Reproduce data analysis, feature occurrences binarized:}
 	\begin{itemize}
 		\small
 		\item $\widehat{P(love|d=positive)} = 0.1796$ , $\widehat{P(love|d=negative)} = 0.1334$ \pause
@@ -290,10 +312,7 @@
 	\end{itemize}
 \end{frame}
 
-% add example here
-% how to fit nb ?
-
-\subsection{SVM}
+\subsection{Maximum entropy}
 \begin{frame}
 	\frametitle{Maximum entropy classifier}
 	\framesubtitle{aka logistic regression}
@@ -310,9 +329,11 @@
 			\item Defined: $F_{i,c}(d,c') = 1$ if feature $i$ \textbf{appears} on document $d$ and its estimated class is c, o.w. $F_{i,c}(d,c) = 0$
 		\end{itemize}
 		\pause
-		\item $\lambda_{i,c}$ - feature-weight parameters (large values imply $f_i$ is a strong indicator for class c)
-		\pause
-		\item Aside: reminds neuron  activation function
+		\item $\lambda_{i,c}$ - feature-weight parameters 
+		\begin{itemize}
+			\item large values imply $f_i$ is a strong indicator for class c
+		\end{itemize}
+
 	\end{itemize}
 	
 	\pause
@@ -328,9 +349,10 @@
 \begin{frame}
 	\frametitle{Support vector machines}
 	\begin{itemize}
-		\item Goal: Find hyperplane $w$ which separates classes with margin large as possible
+		\item Goal: Find hyperplane $w$ which separates classes with margin large as possible \pause
+		\item In this setting we define $w$ as:
 	\end{itemize}
-
+	
 	\begin{Definition}[SVM hyperplane]
 		Let $c_j \in \{1,-1\}$ be the class of document $d_j$ then: \\
 		\centering{
@@ -410,7 +432,7 @@
 	\frametitle{Reproduce results}
 	\framesubtitle{(2018)}
 	\begin{itemize}
-		\item We have tried to reproduce the experiment for the best settings reported
+		\item We have tried to reproduce the experiment for the best setting reported
 	\end{itemize}
 	\begin{center}
 		\begin{table}
@@ -423,8 +445,12 @@
 		\end{table}
 	\end{center} \pause
 	\begin{itemize}
-		\item \textbf{No tuning} was used at all; Plus not all described processing steps applied 
-		\item Notebook is available here(link)
+		\item MLP is 2-layer neural network with 100 Relu neurons
+		\item \textbf{No tuning} was used (sklearn 0.19.2 default parameters)
+		\begin{itemize}
+			\item Plus not all described processing steps applied 
+		\end{itemize}
+		\item Notebook is available \href{https://github.com/dorcoh/sentiment-emnlp/blob/master/experiment/sentiment-analysis-emnlp2002.ipynb}{\beamergotobutton{here}}
 	\end{itemize}
 \end{frame}
 
@@ -432,20 +458,25 @@
 	\frametitle{Classifier comparison}
 	\framesubtitle{(2018)}
 	\begin{itemize}
-		\item Let's observe our classifiers decision boundaries for some toy datasets: \pause
+		\item Let's observe our classifiers decision boundaries for some toy datasets \pause
 	\end{itemize}
 	\begin{center}
 		\includegraphics[scale=0.26]{comparison}
 	\end{center}
-	
+	\begin{itemize}
+		\item Accuracy is reported
+	\end{itemize}
 \end{frame}
 
 \section{Conclusions}
 \begin{frame}
 	\frametitle{Conclusions}
 	\begin{itemize}
-	\item Unigrams presence setting achieves the best performance \pause
-	\item Applying selection algorithms for unigrams could improve performance \pause
+	\item Unigrams presence setting achieves the best performance
+	\begin{itemize}
+		\item Apply feature selection algorithms
+	\end{itemize}
+	\pause
 	\item Contrarily, performance isn't comparable to topic classification 
 	\end{itemize}
 	\pause
