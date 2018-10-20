@@ -103,7 +103,7 @@
 	\begin{itemize}
 		\item Q: What are our expected challenges?
 		\pause %1
-		\item A: Topics are identifiable by key words alone, while sentiment requires more \textbf{understanding}
+		\item A: Topics are identifiable by key words alone \\ detecting sentiment requires more \textbf{understanding}
 	\end{itemize}
 	\end{itemize}
 	
@@ -157,13 +157,12 @@
 \begin{frame}
 	\frametitle{Problem definition}
 	\begin{itemize}
-		\item Find mapping from text to binary label \pause
+		\item Find mapping from text to binary label
 		\begin{itemize}
 			\item Supervised learning
 		\end{itemize} \pause
-		\item For $m$ numeric features we define:
+		\item For $m$ numeric features (extracted from text) we define:
 	\end{itemize}
-	\pause
 	\begin{definition}[Binary classifier]
 		\center
 		$f: X \to y$ \\
@@ -171,7 +170,7 @@
 	\end{definition}
 	\pause
 	\begin{itemize}
-		\item Evaluate by loss function \pause
+		\item Evaluate by loss function
 		\item e.g., Zero-one loss: $L(x,y,f_w)=\textbf{1}\{ f_w(x) \neq y \}$
 		\begin{itemize}
 			\item $w$ denotes learned parameters
@@ -243,15 +242,12 @@
 		\begin{itemize}
 			\item Not necessarily the reason for low accuracy!
 		\end{itemize}
-		\pause
 		\item Authors propose their list
 		\begin{itemize}
 			\item Backed up with statistics
 		\end{itemize}
 	\end{itemize}
 	
-	
-	\pause
 	\begin{table}
 		\scriptsize
 		\begin{tabular}{ l | p{5cm} | c | c }
@@ -319,7 +315,6 @@
 		\item $d_1$: "Audio rocks"
 		\item $d_2$: "Act boring"
 	\end{itemize}
-	\pause
 	\begin{center}
 	\begin{table}
 		\begin{tabular}{c|c|c|c|c}
@@ -331,7 +326,6 @@
 	\end{table}
 	\end{center}
 	
-	\pause
 	\begin{itemize}
 		\item $d_3$: "Boring effects", $d_3^{bow}=$? \pause
 		\item $d_3^{bow}$=(0,0,1,0)
@@ -389,7 +383,64 @@
 	\end{itemize}
 \end{frame}
 
-\subsection{Maximum entropy}
+\subsection{SVM, Logistic Regression}
+\begin{frame}
+	\frametitle{SVM vs. Logistic regression}
+	\begin{itemize}
+		\item Can view both parametrically: $ f(x_i,W) = Wx_i + b $
+		\item \textbf{Train} with gradient descent:
+		\begin{itemize}
+			\item Initialize parameters
+			\item 1. Update parameters following loss gradient
+			\item 2. Repeat until convergence
+		\end{itemize}
+	\end{itemize}
+	\pause
+	Methods differ in their loss functions:
+	\begin{definition}[SVM loss]
+		$ L_i = \sum_{j \neq i}max(0, s_{j} - s_{y_{i}} + \delta)$, where $s_j = f(X_i,W)_j$
+	\end{definition}
+	
+	\begin{definition}[Softmax loss]
+		$ L_i = -log( \frac{ e^{f_{y_{i}}}  }{ \sum_{j} e^{f_{j}} }  ) $
+	\end{definition}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{SVM vs. Logistic regression}
+	\framesubtitle{Evaluate loss example}
+	\begin{center}
+		\includegraphics[scale=0.125]{svm_softmax}
+	\end{center}
+	
+\end{frame}
+
+\iffalse
+\begin{frame}
+	\frametitle{Logistic regression vs. SVM}
+	\framesubtitle{Parametric view}
+	\begin{definition}[Score function]
+		$ f(x_i,W) = Wx_i + b $
+	\end{definition}
+	
+	% something is wrong
+	\begin{definition}[SVM loss]
+		$ L_i = \sum_{j \neq i}(0,s_j-s_y_i + \delta)$
+	\end{definition}
+	
+	\begin{definition}[Softmax loss]
+		$ L_i = -log(\frac{e^f_y_i}{\sum_{j}e^f_j})$
+	\end{definition}
+
+	\begin{definition}[Gradient descent]
+		\centering
+		$w = w - \alpha * \frac{\partial L(X,w)}{\partial w} $ , Update till convergence
+	\end{definition}
+
+\end{frame}
+
+
 \begin{frame}
 	\frametitle{Maximum entropy classifier}
 	\framesubtitle{aka logistic regression}
@@ -447,10 +498,12 @@
 	\end{Definition}
 
 \end{frame}
+\fi
 
 \section{Results}
 \subsection{Results}
 
+\iffalse
 \begin{frame}
 	\frametitle{Results and discussion}
 	\begin{center}
@@ -477,6 +530,7 @@
 		\end{itemize}
 	\end{itemize}
 \end{frame}
+\fi
 
 \begin{frame}
 	\frametitle{Results and discussion}
@@ -487,10 +541,10 @@
 				ID & Features & count & NB & ME & SVM \\ \hline \hline
 				2 & unigrams & 16165 & 81.0\% & 80.4\% & \textbf{82.9}\% \\
 				3 & uni+bigrams & 32330 & 80.6\% & 80.8 & \textbf{82.7}\% \\
-				4 & bigrams & 16165 & 77.3\% & 77.4\% & 77.1\% \pause \\ \hline \hline
-				5 & unigrams+POS & 16695 & 81.5\% & 80.4\% & \textbf{81.9}\% \pause \\
-				6 & adjectives & 2633 & 77.0\% & 77.7\% & 75.1\% \pause \\
-				7 & top 2633 unigrams & 2633 & 80.3\% & 81.0\% & 81.4\% \pause \\
+				4 & bigrams & 16165 & 77.3\% & 77.4\% & 77.1\% \\ \hline \hline
+				5 & unigrams+POS & 16695 & 81.5\% & 80.4\% & \textbf{81.9}\% \\
+				6 & adjectives & 2633 & 77.0\% & 77.7\% & 75.1\% \\
+				7 & top 2633 unigrams & 2633 & 80.3\% & 81.0\% & 81.4\% \\
 				8 & unigram+position & 22430 & 81.0\% & 80.1\% & \textbf{81.6}\% \\
 			\end{tabular}
 			\caption{3-fold average accuracies, bigrams appear at least 7 times on corpus.}
@@ -498,9 +552,31 @@
 	\end{center}
 	\pause
 	\begin{itemize}
-		\item Adding bigrams doesn't improve results; Bigrams alone is worse \pause
-		\item Part-of-speech: "I love this movie" vs. "This is a love story" \pause
+		\item Adding bigrams doesn't improve results; Bigrams alone is worse
+		\item Part-of-speech: "I love this movie" vs. "This is a love story"
 		\item Position based on dividing text into quarters.
+	\end{itemize}
+\end{frame}
+
+\section{Conclusions}
+\begin{frame}
+	\frametitle{Conclusions}
+	\begin{itemize}
+		\item Unigrams presence setting achieves the best performance
+		\begin{itemize}
+			\item Apply feature selection algorithms
+		\end{itemize}
+		\item Contrarily, performance isn't comparable to topic classification 
+	\end{itemize}
+	
+	\begin{snt}
+		"This film should be brilliant. It sounds like a great plot, the actors are first grade, and the supporting cast is good as well, and Stallone is attempting to deliver a good performance. However, it can't hold up."
+	\end{snt}
+	\pause
+	
+	\begin{itemize}
+		\item Difficult for bag-of-words classifiers.
+		\item Authors suggest determining the \textbf{focus} of each sentence
 	\end{itemize}
 \end{frame}
 
@@ -515,18 +591,15 @@
 		\begin{table}
 			\begin{tabular}{l | l | l || l | l | l}
 				Features & count & NB & ME & SVM & MLP\\ \hline \hline
-				unigrams & 16165 & 81.0\% & 80.4\% & \textbf{82.9}\% & NA \pause \\
+				unigrams & 16165 & 81.0\% & 80.4\% & \textbf{82.9}\% & NA \\
 				unigrams & 16165 & 77.48\% & \textbf{81.52}\% & 80.66\% & \textbf{82.75}\%  \\
 			\end{tabular}
 			\caption{Original vs. our results}
 		\end{table}
-	\end{center} \pause
+	\end{center}
 	\begin{itemize}
-		\item MLP is 2-layer neural network with 100 Relu neurons
 		\item \textbf{No tuning} was used (sklearn 0.19.2 default parameters)
-		\begin{itemize}
-			\item Plus not all described processing steps applied 
-		\end{itemize}
+		\item MLP is 2-layer neural network with 100 Relu neurons
 		\item Notebook is available \href{https://github.com/dorcoh/sentiment-emnlp/blob/master/experiment/sentiment-analysis-emnlp2002.ipynb}{\beamergotobutton{here}}
 	\end{itemize}
 \end{frame}
@@ -535,7 +608,7 @@
 	\frametitle{Classifier comparison}
 	\framesubtitle{(2018)}
 	\begin{itemize}
-		\item Let's observe our classifiers decision boundaries for some toy datasets \pause
+		\item Our classifiers decision boundaries for some toy datasets
 	\end{itemize}
 	\begin{center}
 		\includegraphics[scale=0.26]{comparison}
@@ -545,29 +618,6 @@
 	\end{itemize}
 \end{frame}
 
-\section{Conclusions}
-\begin{frame}
-	\frametitle{Conclusions}
-	\begin{itemize}
-	\item Unigrams presence setting achieves the best performance
-	\begin{itemize}
-		\item Apply feature selection algorithms
-	\end{itemize}
-	\pause
-	\item Contrarily, performance isn't comparable to topic classification 
-	\end{itemize}
-	\pause
-
-	\begin{snt}
-		"This film should be brilliant. It sounds like a great plot, the actors are first grade, and the supporting cast is good as well, and Stallone is attempting to deliver a good performance. However, it can't hold up."
-	\end{snt}
-	\pause
-	
-	\begin{itemize}
-		\item Difficult for bag-of-words classifiers. \pause
-		\item Authors suggest determining the \textbf{focus} of each sentence, if is on/off topic.
-	\end{itemize}
-\end{frame}
 
 \begin{frame}
 	\centering
