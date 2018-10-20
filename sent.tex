@@ -37,7 +37,7 @@
 \title{Thumbs Up? Sentiment Classification using Machine Learning Techniques}
 \subtitle{Pang, Lee, Vaithyanathan - EMNLP 2002}
 \author{Slides by: Dor Cohen, Itai Gat}
-\institute{IE @ Technion}
+\institute{IE\&M @ Technion}
 \date{\today}
 
 \newtheorem{snt}{Review example}
@@ -398,7 +398,7 @@
 	\pause
 	Methods differ in their loss functions:
 	\begin{definition}[SVM loss]
-		$ L_i = \sum_{j \neq i}max(0, s_{j} - s_{y_{i}} + \delta)$, where $s_j = f(X_i,W)_j$
+		$ L_i = \sum_{j \neq i}max(0, s_{j} - s_{y_{i}} + \delta)$, where $s_j = f(x_i,W)_j$
 	\end{definition}
 	
 	\begin{definition}[Softmax loss]
@@ -547,7 +547,7 @@
 				7 & top 2633 unigrams & 2633 & 80.3\% & 81.0\% & 81.4\% \\
 				8 & unigram+position & 22430 & 81.0\% & 80.1\% & \textbf{81.6}\% \\
 			\end{tabular}
-			\caption{3-fold average accuracies, bigrams appear at least 7 times on corpus.}
+			\caption{3-fold average accuracies, unigram/bigrams appear at least 4/7 times on corpus. Expressions with negation words were handled with unified "NOT" tag. }
 		\end{table}
 	\end{center}
 	\pause
@@ -598,8 +598,8 @@
 		\end{table}
 	\end{center}
 	\begin{itemize}
-		\item \textbf{No tuning} was used (sklearn 0.19.2 default parameters)
-		\item MLP is 2-layer neural network with 100 Relu neurons
+		\item \textbf{No tuning} (sklearn 0.19.2 default parameters)
+		\item MLP: 2-layer neural network, 100 Relu neurons, sigmoid
 		\item Notebook is available \href{https://github.com/dorcoh/sentiment-emnlp/blob/master/experiment/sentiment-analysis-emnlp2002.ipynb}{\beamergotobutton{here}}
 	\end{itemize}
 \end{frame}
