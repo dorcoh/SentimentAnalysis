@@ -48,14 +48,22 @@
 	\titlepage
 \end{frame}
 
+% commented
 % agenda
+
+\iffalse
 \begin{frame}
 	\frametitle{Agenda}
 	\tableofcontents
 \end{frame}
+\fi
 
 % intro
-\section{Introduction}
+\section{Problem definition}
+
+% intro pages - currently commented out
+% motivation plays as intro instead
+\iffalse
 \subsection{Topic classification}
 
 \begin{frame}
@@ -75,6 +83,7 @@
 	\end{itemize}
 \end{frame}
 
+% commented
 \iffalse
 \begin{frame}
 	\frametitle{Topic classification}
@@ -129,6 +138,7 @@
 	%\end{itemize}
 
 \end{frame}
+\fi
 
 \begin{frame}
 	\frametitle{Sentiment analysis}
@@ -152,7 +162,6 @@
 \end{frame}
 
 % problem
-\section{Problem}
 \subsection{Problem definition}
 \begin{frame}
 	\frametitle{Problem definition}
@@ -203,23 +212,22 @@
 \begin{frame}
 	\frametitle{Human based sentiment classifiers}
 	\begin{itemize}
-		\onslide<1->
-		\item In contrast to topics, detecting sentiment is easier for us (why?)
-		\begin{itemize}
+		%\onslide<1->
+		%\item In contrast to topics, detecting sentiment is easier for us (why?)
+		%\begin{itemize}
 		
-		\onslide<2->
-		\item People tend to express strong feelings, topics can be related
+		%\onslide<2->
+		%\item People tend to express strong feelings, topics can be related
 		%\item Topics can be related, while with opinions people tend to express strong feelings
-		\end{itemize}
+		%\end{itemize}
 		
-		\onslide<3->
+		%\onslide<3->
 		\item \textbf{Hypothesis:} certain words indicate on sentiment type
 		
-		\onslide<4->
 		\item \textbf{Test:} count positive vs. negative words
 	\end{itemize}
 	
-	\onslide<5->
+	%\onslide<5->
 	\begin{table}
 		\scriptsize
 		\begin{tabular}{ l | p{5cm} | c | c }
@@ -230,7 +238,8 @@
 		\caption{Baseline results for human word lists, data is balanced (700 vs. 700)}
 	\end{table}
 	
-	 \only<5->{\footnotetext{Documents percentage where sentiments rated equally}}
+	 %\only<5->{\footnotetext{Documents percentage where sentiments rated equally}}
+	 \footnotetext{Documents percentage where sentiments rated equally}
 \end{frame}
 
 \begin{frame}
@@ -238,7 +247,6 @@
 	\framesubtitle{Should we worry about high rate of ties?}
 	\begin{itemize}
 		\item Proposed list is relatively short (usually effect is 0 vs. 0)
-		\pause
 		\begin{itemize}
 			\item Not necessarily the reason for low accuracy!
 		\end{itemize}
@@ -274,6 +282,7 @@
 \section{Methods}
 \subsection{Bag of words}
 
+\iffalse
 \begin{frame}
 \frametitle{Bag of words}
 \framesubtitle{Framework details}
@@ -307,6 +316,7 @@
 \end{Definition}
 
 \end{frame}
+\fi
 
 \begin{frame}
 	\frametitle{Bag of words}
@@ -352,12 +362,12 @@
 		\begin{itemize}
 			\item Hence $\widehat{P(d|c)}=\prod_{i=1}^{m}P(f_i|c)^{n_i(d)}$ 
 		\end{itemize}
-		\pause
-		\item Q: Any numeric issues you notice?
-		\pause
-		\item $A_1$: Estimates could be zero
-		\pause
-		\item $A_2$: Short vs. long documents
+		%\pause
+		%\item Q: Any numeric issues you notice?
+		%\pause
+		%\item $A_1$: Estimates could be zero
+		%\pause
+		%\item $A_2$: Short vs. long documents
 	\end{itemize}
 \end{frame}
 
@@ -501,6 +511,31 @@
 \fi
 
 \section{Results}
+\subsection{Experimental setup}
+\begin{frame}
+	\frametitle{Experimental setup}
+\begin{itemize}	
+	% introduce unigrams, bigrams
+	%\item Experimented with various settings
+	\item Features:
+	\begin{itemize}
+		\item $d$: "Audio quality rocks"
+		\item Unigram: \{'audio', 'rocks',..  \}
+		\item Bigram: \{'audio quality',.. \}
+		\item N-gram !
+	\end{itemize}
+\end{itemize}
+
+\textbf{Setup}
+\begin{itemize}
+	\item Unigram/bigram appear at least 4/7 times
+	\item Uniform class distributions ("balanced" dataset)
+	\item 3-fold average accuracies reported
+	\item Expressions with negation handled with unified NOT tag
+	\item Punctuation treated as separate lexicon, no stemming used
+\end{itemize}
+\end{frame}
+
 \subsection{Results}
 
 \iffalse
@@ -547,7 +582,7 @@
 				7 & top 2633 unigrams & 2633 & 80.3\% & 81.0\% & 81.4\% \\
 				8 & unigram+position & 22430 & 81.0\% & 80.1\% & \textbf{81.6}\% \\
 			\end{tabular}
-			\caption{3-fold average accuracies, unigram/bigrams appear at least 4/7 times on corpus. Expressions with negation words were handled with unified "NOT" tag. }
+			%\caption{3-fold average accuracies, unigram/bigrams appear at least 4/7 times on corpus. Expressions with negation words were handled with unified "NOT" tag. }
 		\end{table}
 	\end{center}
 	\pause
@@ -580,6 +615,7 @@
 	\end{itemize}
 \end{frame}
 
+\iffalse
 \section{Reproduce results}
 \begin{frame}
 	\frametitle{Reproduce results}
@@ -617,7 +653,7 @@
 		\item Accuracy is reported
 	\end{itemize}
 \end{frame}
-
+\fi
 
 \begin{frame}
 	\centering
