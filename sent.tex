@@ -63,6 +63,14 @@
 
 % intro pages - currently commented out
 % motivation plays as intro instead
+
+
+\begin{frame}
+	\frametitle{Topic classification}
+	\centering
+	\includegraphics[scale=0.4]{word_cloud}
+\end{frame}
+
 \iffalse
 \subsection{Topic classification}
 
@@ -192,18 +200,24 @@
 \begin{frame}
 	\frametitle{Data: IMDB Movie Reviews}
 	\begin{itemize}
-		\item Lucky for us: user rating provides \textbf{supervised} learning
-		\item Converted into 3 categories:
-		\begin{itemize}
-			\item \emph{Positive}, \emph{negative}, (\emph{neutral} - not used)
-		\end{itemize}
-		\item Avoid bias issues:
-		\begin{itemize}
-			\item 20 reviews per author per sentiment
-			\item 752 negative vs 1301 positive
-			\item total of 144 reviewers
-		\end{itemize}
+		\item User rating provides \textbf{supervised} learning:
+		%\item Converted into 3 categories:
+		%\begin{itemize}
+		%	\item \emph{Positive}, \emph{negative}, (\emph{neutral} - not used)
+		%\end{itemize}
+		%\item Avoid bias issues:
+		%\begin{itemize}
+		%	\item 20 reviews per author per sentiment
+		%	\item 752 negative vs 1301 positive
+		%	\item total of 144 reviewers
+		%\end{itemize}
 	\end{itemize}
+	\begin{center}
+		\includegraphics[scale=0.4]{rating_bar}
+	\end{center}
+	\begin{center}
+		\includegraphics[scale=0.5]{reviews}
+	\end{center}
 \end{frame}
 
 % human based
@@ -322,23 +336,23 @@
 	\frametitle{Bag of words}
 	\framesubtitle{Example}
 	\begin{itemize}
-		\item $d_1$: "Audio rocks"
-		\item $d_2$: "Act boring"
+		\item $d_1$: "Great soundtrack, boring actors"
+		\item $d_2$: "Annoying soundtrack, great actors"
 	\end{itemize}
 	\begin{center}
 	\begin{table}
-		\begin{tabular}{c|c|c|c|c}
-			& act & audio & boring & rocks \\ \hline \hline
-			mapping & 0 & 1 & 2 & 3 \\ \hline
-			d1 & 0 & 1 & 0 & 1 \\
-			d2 & 1 & 0 & 1 & 0
+		\begin{tabular}{c|c|c|c|c|c}
+			& actors & soundtrack & boring & annoying & great \\ \hline \hline
+			d1 & 1 & 1 & 1 & 0 & 1 \\
+			d2 & 1 & 1 & 0 & 1 & 1
 		\end{tabular}
 	\end{table}
 	\end{center}
 	
 	\begin{itemize}
-		\item $d_3$: "Boring effects", $d_3^{bow}=$? \pause
-		\item $d_3^{bow}$=(0,0,1,0)
+		\item $d_3$: "Great soundtrack, great actors, great popcorn."
+		\item $d_3^{bow}=$? \pause
+		\item $d_3^{bow}$=(1,1,0,0,3)
 	\end{itemize}
 \end{frame}
 
@@ -514,25 +528,23 @@
 \subsection{Experimental setup}
 \begin{frame}
 	\frametitle{Experimental setup}
+\textbf{Features:}
 \begin{itemize}	
 	% introduce unigrams, bigrams
 	%\item Experimented with various settings
-	\item Features:
-	\begin{itemize}
-		\item $d$: "Audio quality rocks"
-		\item Unigram: \{'audio', 'rocks',..  \}
-		\item Bigram: \{'audio quality',.. \}
-		\item N-gram !
-	\end{itemize}
+	\item $d$: "Audio quality rocks"
+	\item Unigram: \{'audio', 'rocks',..  \}
+	\item Bigram: \{'audio quality',.. \}
+	\item N-gram !
 \end{itemize}
 
 \textbf{Setup}
 \begin{itemize}
 	\item Unigram/bigram appear at least 4/7 times
-	\item Uniform class distributions ("balanced" dataset)
-	\item 3-fold average accuracies reported
-	\item Expressions with negation handled with unified NOT tag
-	\item Punctuation treated as separate lexicon, no stemming used
+	\item Uniform class distributions
+	\item 3-fold average accuracies
+	\item Unified NOT tag
+%	\item Punctuation treated as separate lexicon, no stemming used
 \end{itemize}
 \end{frame}
 
