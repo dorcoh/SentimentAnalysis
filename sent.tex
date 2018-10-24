@@ -392,7 +392,6 @@
 		\begin{table}
 			\begin{tabular}{c|c|c|c|c}
 				& act & audio & boring & rocks \\ \hline \hline
-				mapping & 0 & 1 & 2 & 3 \\ \hline
 				positive & 1 & 3 & 1 & 3 \\
 				negative & 3 & 1 & 3 & 1
 			\end{tabular}
@@ -402,8 +401,8 @@
 	\begin{itemize}
 		\item $d_3$ = "Boring effects" , $d_3^{bow}=(0,0,1,0)$ \pause
 		\item Recall $\widehat{P(d|c)}=\prod_{i=1}^{m}P(f_i|c)^{n_i(d)}$ \pause
-		\item $P(d|pos)=\frac{1}{4}^0*\frac{1}{4}^0*\frac{1}{4}^1*\frac{1}{4}^0=\frac{1}{4}$ \pause
-		\item $P(d|neg)=\frac{1}{4}^0*\frac{1}{4}^0*\frac{3}{4}^1*\frac{1}{4}^0=\frac{3}{4}$
+		\item $P(d|pos)=\frac{1}{4}^0*\frac{3}{4}^0*\frac{1}{4}^1*\frac{3}{4}^0=\frac{1}{4}$ \pause
+		\item $P(d|neg)=\frac{3}{4}^0*\frac{1}{4}^0*\frac{3}{4}^1*\frac{1}{4}^0=\frac{3}{4}$
 	\end{itemize}
 \end{frame}
 
@@ -435,7 +434,7 @@
 	\frametitle{SVM vs. Logistic regression}
 	\framesubtitle{Evaluate loss example}
 	\begin{center}
-		\includegraphics[scale=0.125]{svm_softmax}
+		\includegraphics[scale=0.27]{svm_softmax_img}
 	\end{center}
 	
 \end{frame}
